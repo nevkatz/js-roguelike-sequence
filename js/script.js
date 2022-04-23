@@ -217,14 +217,9 @@ function startGame() {
      generateItems(STARTING_WEAPONS_AMOUNT, WEAPON_CODE);
      generateItems(STARTING_POTIONS_AMOUNT, POTION_CODE);
      generateEnemies(TOTAL_ENEMIES);
-     drawMap(0, 0, COLS, ROWS);
      updateStats();
+     drawMap(0, 0, COLS, ROWS);
   }
-
-
-      // labelRooms();
-   
-
 }
 function labelRooms() {
    game.context.fillStyle ='black';
@@ -549,7 +544,8 @@ function drawMap(startX, startY, endX, endY) {
          let color = null;
 
          // if shadow is on and the shadow is down....
-         if (game.isShadowToggled && game.shadow[row][col] == SHADOW_CODE) {
+
+         if (game.isShadowToggled && game.shadow[row] && game.shadow[row][col] == SHADOW_CODE) {
             // simply draw black.
             color = 'black';
 
@@ -824,7 +820,7 @@ function removeObjFromMap(x, y) {
  */
 function generateShadow() {
 
-
+   game.shadow = [];
    let start = {},
       end = {};
 
