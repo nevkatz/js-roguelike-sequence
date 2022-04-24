@@ -17,6 +17,3 @@ function sequentialRooms() {
    return false;
  
 }
-/***
- * @TODO: Add a relic at the end of each passageway
- */

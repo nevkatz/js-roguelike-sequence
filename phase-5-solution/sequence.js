@@ -118,13 +118,18 @@ function sequentialRooms() {
      }
    }
    // maybe talk about these to get different results
-  // for (var room of game.rooms) {
-   //   let success = room.findFacingRooms(3);
+   /**
+    * Turn this on if you want more passages.
+    * 
+    * for (var room of game.rooms) {
+      let success = room.findFacingRooms(3);
 
-     // let success = room.nearestNeighbor();
+      success = room.nearestNeighbor();
 
-      //console.log(`Room${room.id} success: ${success}`);
-  // }
+      console.log(`Room${room.id} success: ${success}`);
+   }
+
+   */
 
    // after this, select other rooms to branch off of
 
