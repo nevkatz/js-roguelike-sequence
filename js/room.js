@@ -403,12 +403,13 @@ Room.prototype.possibleExits = function(room,axis,wall) {
    return {start, end};
 
 }
-Room.prototype.placePathX = function(room,path,wall) {
+Room.prototype.placePathX = function(room, path, wall, center) {
    
    let {start, end} = this.possibleExits(room,'x',wall);
 
-   if (this.center.x >= start && this.center.y <= end &&
-
+   if (center && 
+       this.center.x >= start && 
+       this.center.x <= end &&
        !path.isAdjacentHoriz(this.center.x)) {
          path.allowed = true;
          path.start.x = path.end.x = this.center.x;
@@ -426,12 +427,15 @@ Room.prototype.placePathX = function(room,path,wall) {
    }
    return path;
 }
-Room.prototype.placePathY = function(room,path,wall) {
+Room.prototype.placePathY = function(room, path, wall, center) {
    
    let {start, end} = this.possibleExits(room,'y', wall);
 
-   if (this.center.y >= start && this.center.y <= end &&
+   if (center &&
+       this.center.y >= start && 
+       this.center.y <= end &&
       !path.isAdjacentHoriz(this.center.y)) {
+
          path.allowed = true;
          path.start.y = path.end.y = this.center.y;
          return path;
@@ -450,14 +454,14 @@ Room.prototype.placePathY = function(room,path,wall) {
 
    return path;
 }
-Room.prototype.addVertPath = function(room, path, wall) {
+Room.prototype.addVertPath = function(room, path, wall, center) {
 
    path.start.y = Math.min(this.end.y,room.end.y) + 1;
 
    path.end.y = Math.max(this.start.y,room.start.y) - 1;
 
 
-   path = this.placePathX(room,path,wall);
+   path = this.placePathX(room,path,wall, center);
  
    if (path.allowed) {
        
@@ -469,7 +473,7 @@ Room.prototype.addVertPath = function(room, path, wall) {
    return path;
 
 }
-Room.prototype.addHorizPath = function(room, path, wall) {
+Room.prototype.addHorizPath = function(room, path, wall, center) {
 
    // the preference is to use the center.
    // this could be taken out if we want to simplify the tutorial.
@@ -480,7 +484,7 @@ Room.prototype.addHorizPath = function(room, path, wall) {
    // use the left side of whatever room is on the right
    path.end.x = Math.max(this.start.x,room.start.x) - 1;
 
-   path = this.placePathY(room,path,wall);
+   path = this.placePathY(room,path,wall, center);
   
    if (path.allowed) {
 
@@ -491,7 +495,7 @@ Room.prototype.addHorizPath = function(room, path, wall) {
    return path;
 
 }
-Room.prototype.directConnect = function(room, min) {
+Room.prototype.directConnect = function(room, min, center) {
 
  let path = new Path();
  
@@ -499,10 +503,10 @@ Room.prototype.directConnect = function(room, min) {
 
  if (this.sharesCoordsWith(room, 'x', min)) {
 
-      path = this.addVertPath(room,path,wall);  
+      path = this.addVertPath(room, path, wall, center);  
  }
  else {
-      path = this.addHorizPath(room,path,wall);
+      path = this.addHorizPath(room, path, wall, center);
  }
 
   return path.allowed;

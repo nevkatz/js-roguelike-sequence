@@ -2,16 +2,25 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>Roguelike Project (Solution)</title>
+  <title>Roguelike Phases</title>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<h1>Roguelike Phases</h1>
 <div id="container"></div>
-
-<script src="js/game.js"></script>
-<script src="js/path.js"></script>
-<script src="js/room.js"></script>
-<script src="js/sequential.js"></script>
-<script src="js/script.js"></script>
 </body>
+<script>
+  let el = document.querySelector('#container');
+  let d = document.createDocumentFragment();
+  let numPhases = 5;
+  for (var i = 1; i <= numPhases; ++i) {
+    let p = document.createElement('p');
+    let a = document.createElement('a');
+    a.href = `phase-${i}/index.html`;
+    a.innerHTML = `Phase ${i}`;
+    p.appendChild(a);
+    d.appendChild(p);
+  }
+  el.appendChild(d);
+</script>
 </html>

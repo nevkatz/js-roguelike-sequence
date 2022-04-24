@@ -78,18 +78,25 @@ function sequentialRooms() {
       x:Math.round(COLS/2),
       y:Math.round(ROWS/2)
    };
-   // base dimensions, extra for width, type of room
-   let baseDimensions = 40;
-   let extraWidth = 10;
-   let roomType = 'wide';
-   
-   let baseRoom = addRoom(r1, baseDimensions, extraWidth, roomType);
+
+   let baseRoom = addRoom(r1, 6, 5, 'wide');
+
+   let maxRooms = 20;
+
+     for (var i = 0; i < maxRooms; ++i) {
+        let newRoom = addAdjacentRoom(baseRoom);
+        if (!newRoom) {
+          break;
+        }
+        // new
+        let min = 3;
+        baseRoom.directConnect(newRoom, min, true);
+        baseRoom = newRoom;
+     }
 
    drawMap(0, 0, COLS, ROWS);
-  
-   return false;
+   labelRooms();
+
+   return true;
 
 }
-/***
- * @TODO: Add a relic at the end of each passageway
- */
