@@ -486,7 +486,6 @@ Room.prototype.addHorizPath = function(room, path, wall, center) {
    path = this.placePathY(room,path,wall, center);
   
    if (path.allowed) {
-
           game.addPath(path);
 
           this.addNeighbor(room);
@@ -494,7 +493,7 @@ Room.prototype.addHorizPath = function(room, path, wall, center) {
    return path;
 
 }
-Room.prototype.directConnect = function(room, min, center) {
+Room.prototype.directConnect = function(room, min=3, center=true) {
 
  let path = new Path();
  
@@ -571,4 +570,39 @@ Room.prototype.nearestNeighbor = function(rooms) {
        }
    }
    return success;
+}
+/**
+ * Methods for placing items on a per-room basis
+ */ 
+Room.prototype.tileCount = function(tileCode) {
+
+   let count = 0;
+   for (let y = this.start.y; y <= this.end.y; ++y) {
+      for (let x = this.start.x; x <= this.end.x; ++x) {
+         if (game.map[y][x]==tileCode) {
+            count++;
+         }
+      }
+   }
+   return count;
+}
+Room.prototype.generateFreeCoords = function() {
+
+   let x = null, y=null;
+
+   let turns = 0, limit = 100;
+
+   const valid = (x,y) => game.map[y][x] == FLOOR_CODE;
+
+   let width = this.end.x - this.start.x;
+   let height = this.end.y - this.start.y;
+
+   do {
+      x = this.start.x + Math.floor(Math.random() * width);
+      y = this.start.y + Math.floor(Math.random() * height);
+      turns++;
+   }
+   while (!valid(x,y) && turns < limit);
+
+   return valid(x,y) ? {x,y} : null;
 }

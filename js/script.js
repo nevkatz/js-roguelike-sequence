@@ -38,7 +38,8 @@ const TILE_DIM = 10;
 
 
 // total enemies
-const TOTAL_ENEMIES = 30;
+const TOTAL_ENEMIES = 15;
+const MAX_RELICS = 5;
 const STARTING_POTIONS_AMOUNT = 10;
 const STARTING_WEAPONS_AMOUNT = 10;
 
@@ -56,7 +57,9 @@ const TILE_COLORS = [
    // weapon
    'orange',
    // relic
-   'purple'
+   // '#86549c'
+   //'#b27bb6'
+   '#a117f2'
 ];
 
 /**
@@ -72,13 +75,15 @@ const TILE_COLORS = [
  * @property {string} weapon - ties to an object with a damage rating
  * @property {object} coords - location on the grid
  * @property {number} xp - experience points
+ * @property {relics} relics - relics collected
  */
 class Player {
-   constructor(level, health, weapon, coords, xp) {
+   constructor(level, health, weapon, coords, xp, relics) {
       this.level = level;
       this.health = health;
       this.weapon = weapon;
       this.coords = coords;
+      this.relics = relics;
       this.xp = xp;
    }
 }
@@ -149,7 +154,7 @@ function createDOM() {
 
    hud.id = 'hud';
 
-   let labels = ['XP', 'Level', 'Health', 'Weapon', 'Damage', 'Enemies'];
+   let labels = ['XP', 'Level', 'Health', 'Weapon', 'Damage', 'Enemies','Relics'];
 
    for (var label of labels) {
       hud = addStat(label, hud);
@@ -473,14 +478,17 @@ function generateItems(quantity, tileCode) {
 
       let coords = generateValidCoords();
 
-      addObjToMap(coords, tileCode);
+      placeItem(coords,tileCode);
+   }
+}
+function placeItem(coords,tileCode) {
+   
+   addObjToMap(coords, tileCode);
 
-      if (!game.isShadowToggled ||
+   if (!game.isShadowToggled ||
          game.shadow[coords.y][coords.x] == VISIBLE_CODE) {
-
          let color = TILE_COLORS[tileCode];
          drawObject(coords.x, coords.y, color);
-      }
    }
 }
 
@@ -492,7 +500,7 @@ function generateItems(quantity, tileCode) {
  */
 function updateStats() {
 
-   let player_props = ['xp', 'level', 'health'];
+   let player_props = ['xp', 'level', 'health','relics'];
 
    for (var prop of player_props) {
       let el = document.getElementById(prop);
@@ -521,9 +529,13 @@ function updateStats() {
 
       el.textContent = player.weapon[key];
    }
-   let enemyStats = document.querySelector("#enemies")
 
-   enemyStats.textContent = game.enemies.length;
+
+   let stats = document.getElementById('enemies');
+
+   stats.textContent = game.enemies.length;
+
+  
 }
 
 
@@ -567,7 +579,7 @@ function drawMap(startX, startY, endX, endY) {
 
 function generateValidCoords() {
 
-   var x, y;
+   var x=null, y=null;
 
    let turns = 0,
       limit = 100;
@@ -579,10 +591,7 @@ function generateValidCoords() {
    }
    while (game.map[y][x] != FLOOR_CODE && turns < limit);
 
-   return {
-      x: x,
-      y: y
-   };
+   return {x,y};
 
 }
 /**
@@ -590,24 +599,23 @@ function generateValidCoords() {
  */ 
 function generateValidRoomCoords(room) {
 
-   var x, y;
+   let x=null, y=null;
 
-   let turns = 0,
-      limit = 100;
+   let turns = 0, limit = 100;
 
-   let width = room.start.x + room.start.y
+   const valid = (x,y) => game.map[y][x] == FLOOR_CODE;
+
+   let width = room.end.x - room.start.x;
+   let height = room.end.y - room.start.y;
+
    do {
-      x = room.start.x + Math.floor(Math.random() * COLS);
-      y = room.start.y + Math.floor(Math.random() * ROWS);
+      x = room.start.x + Math.floor(Math.random() * width);
+      y = room.start.y + Math.floor(Math.random() * height);
       turns++;
    }
-   while (game.map[y][x] != FLOOR_CODE && turns < limit);
+   while (!valid(x,y) && turns < limit);
 
-   return {
-      x: x,
-      y: y
-   };
-
+   return valid(x,y) ? {x,y} : null;
 }
 function pickRandom(arr) {
    let idx = Math.floor(Math.random() * arr.length);
@@ -644,7 +652,7 @@ function generatePlayer() {
    };
 
    // level, health, weapon, coords, xp
-   player = new Player(1, 100, WEAPONS[0], coords, 30);
+   player = new Player(1, 100, WEAPONS[0], coords, 30, 0);
 
    addObjToMap(player.coords, PLAYER_CODE);
 }
@@ -724,6 +732,10 @@ function addKeyboardListener() {
 
             removeObjFromMap(x, y);
             generateItems(1, WEAPON_CODE);
+         }
+         else if (game.map[y][x] == RELIC_CODE) {
+            player.relics++;
+            removeObjFromMap(x,y);
          }
          // update player position
          updatePlayerPosition(player.coords.x, player.coords.y, x, y);
