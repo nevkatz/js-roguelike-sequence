@@ -62,6 +62,7 @@ const TILE_COLORS = [
    '#a117f2'
 ];
 
+
 /**
  * Classes 
  */
@@ -224,7 +225,7 @@ function startGame() {
      generateEnemies(TOTAL_ENEMIES);
      updateStats();
      drawMap(0, 0, COLS, ROWS);
-     labelRooms();
+     //labelRooms();
   }
 }
 function labelRooms() {
@@ -237,6 +238,8 @@ function labelRooms() {
       game.context.fillText(txt, (room.start.x+1)*TILE_DIM, room.center.y*TILE_DIM);
    });
 }
+
+
    
 
 /**

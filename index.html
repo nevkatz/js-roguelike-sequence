@@ -13,14 +13,21 @@
   let el = document.querySelector('#container');
   let d = document.createDocumentFragment();
   let numPhases = 5;
-  for (var i = 1; i <= numPhases; ++i) {
+
+  const addItem =(num,label,dir)=> {
     let p = document.createElement('p');
     let a = document.createElement('a');
-    a.href = `phase-${i}/index.html`;
-    a.innerHTML = `Phase ${i}`;
+
+    let myDir = dir || `phase-${num}`;
+    a.href = `${myDir}/index.html`;
+    a.innerHTML = label || `Phase ${num}`;
     p.appendChild(a);
     d.appendChild(p);
+  };
+  for (var i = 1; i <= numPhases; ++i) {
+      addItem(i);
   }
+  addItem(null,'Phase 5 Solution','phase-5-solution')
   el.appendChild(d);
 </script>
 </html>
