@@ -25,7 +25,7 @@ function addAdjacentRoom(room, roomBefore) {
    return false;
   };
 
-  let possibleCenters = (diff=0) => {
+  const possibleCenters = (diff=0) => {
    return [
    // above
     {
@@ -102,7 +102,8 @@ function sequentialRooms() {
           break;
         }
         // new
-        baseRoom.connectRoom(newRoom);
+        let min = 3;
+        baseRoom.directConnect(newRoom,min,true);
         baseRoom = newRoom;
      }
    }
@@ -118,7 +119,8 @@ function sequentialRooms() {
    // after this, select other rooms to branch off of
 
    drawMap(0, 0, COLS, ROWS);
-   labelRooms();
+
+
    return true;
 
 }

@@ -13,15 +13,15 @@ function sequentialRooms() {
    };
 
    /**
-    * @TODO: Make the room smaller and create multiple rooms using a loop
+    * @TODO: Make the room smaller.
     */ 
    let baseRoom = addRoom(r1, 40, 10, 'wide');
 
+   /**
+    * @TODO: Create multiple rooms using a loop.
+    */ 
    drawMap(0, 0, COLS, ROWS);
   
    return true;
 
 }
-/***
- * @TODO: Add a relic at the end of each passageway
- */

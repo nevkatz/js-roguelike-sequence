@@ -25,7 +25,7 @@ function addAdjacentRoom(room, roomBefore) {
    return false;
   };
 
-  let possibleCenters = (diff=0) => {
+  const possibleCenters = (diff=0) => {
    return [
    // above
     {
@@ -95,7 +95,6 @@ function sequentialRooms() {
      }
 
    drawMap(0, 0, COLS, ROWS);
-   labelRooms();
 
    return true;
 

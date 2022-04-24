@@ -219,6 +219,7 @@ function startGame() {
      generateEnemies(TOTAL_ENEMIES);
      updateStats();
      drawMap(0, 0, COLS, ROWS);
+     labelRooms();
   }
 }
 function labelRooms() {

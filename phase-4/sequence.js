@@ -94,12 +94,12 @@ function sequentialRooms() {
           break;
         }
         // new
-        baseRoom.connectRoom(newRoom);
+        let min = 3;
+        baseRoom.directConnect(newRoom, min, true);
         baseRoom = newRoom;
      }
 
    drawMap(0, 0, COLS, ROWS);
-   labelRooms();
    return true;
 
 }

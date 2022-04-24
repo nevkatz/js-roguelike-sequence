@@ -183,15 +183,14 @@ Room.prototype.addNeighbor = function(room) {
  * 
  * @param {Number} min - the minimum number of common coordinates
  */ 
-Room.prototype.connectRoom = function(room, min=3) {
+Room.prototype.connectRoom = function(room, min=3, center) {
 
    let success = false;
 
    if (this.sharesCoordsWith(room, 'x', min) || 
        this.sharesCoordsWith(room, 'y', min)) {
 
-      success = this.directConnect(room, min);
-
+      success = this.directConnect(room, min, center);
    }
    
    if (!success) {
