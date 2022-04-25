@@ -51,8 +51,8 @@ function addAdjacentRoom(room) {
 
   let possibleRooms = [];
 
-  let range = 3;
-  for (var i = -1*range; i <= range; ++i) {
+  const maxDiff = 3;
+  for (var i = -1*maxDiff; i <= maxDiff; ++i) {
    for (let center of possibleCenters(i)) {
      let r = generateRoom(center, width, height);
 
