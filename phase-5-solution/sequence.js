@@ -53,7 +53,7 @@ function addAdjacentRoom(room) {
 
   let range = 3;
   for (var i = -1*range; i <= range; ++i) {
-   for (let center of possibleCenters(range)) {
+   for (let center of possibleCenters(i)) {
      let r = generateRoom(center, width, height);
 
      if (withinLimits(r) && !overlapsAny(r)) {
@@ -87,7 +87,7 @@ function sequentialRooms() {
    let baseRoom = addRoom(r1);
 
    let maxRooms = 30;
-   let minRooms = 15;
+   let minRooms = 20;
 
    while (game.rooms.length < minRooms) {
      
@@ -99,8 +99,6 @@ function sequentialRooms() {
         let newRoom = addAdjacentRoom(baseRoom);
 
          if (!newRoom) {
-
-            console.log('stopped at '+baseRoom.id);
 
             if (baseRoom.tileCount(RELIC_CODE)==0) {
               let coords = baseRoom.generateFreeCoords();
@@ -114,32 +112,11 @@ function sequentialRooms() {
         }
         // new
         let min = 3;
-        baseRoom.directConnect(newRoom,min,true);
+        baseRoom.directConnect(newRoom);
         baseRoom = newRoom;
      }
    }
-   // maybe talk about these to get different results
-   /**
-    * Turn this on if you want more passages.
-    * 
-    * for (var room of game.rooms) {
-      let success = room.findFacingRooms(3);
-
-      success = room.nearestNeighbor();
-
-      console.log(`Room${room.id} success: ${success}`);
-   }
-
-   */
-
-   // after this, select other rooms to branch off of
-
    drawMap(0, 0, COLS, ROWS);
-
-
    return true;
 
 }
-/***
- * @TODO: Add a relic at the end of each passageway
- */

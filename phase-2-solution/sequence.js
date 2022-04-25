@@ -3,7 +3,7 @@ function addAdjacentRoom(room, roomBefore) {
 
   const distBetween = (axis) => {
       let buff = 2;
-      let newSize = axis == 'y' ? height : width;
+      let newSize = (axis == 'y') ? height : width;
       let roomSize = room.end[axis] - room.start[axis];
       return Math.ceil((newSize+roomSize)/2) + buff; 
   } 
@@ -89,8 +89,7 @@ function sequentialRooms() {
           break;
         }
         // new
-        let min = 3;
-        baseRoom.directConnect(newRoom, min, true);
+        baseRoom.directConnect(newRoom);
         baseRoom = newRoom;
      }
 

@@ -250,17 +250,17 @@ function labelRooms() {
 function genDim(baseDim, added, roomType) {
    const BASE_DIM = baseDim || 6;
 
-   const EXTRA_RANGE = 5;
-
-   if (!roomType) {
-      roomType = Math.random() < 0.5 ? 'tall' : 'wide';
-   } 
-
    let width, height;
 
    width = height = BASE_DIM;
 
+   const EXTRA_RANGE = 5;
+
    let additional = added || Math.round(Math.random() * EXTRA_RANGE);
+
+   if (!roomType) {
+      roomType = Math.random() < 0.5 ? 'tall' : 'wide';
+   } 
 
    if (roomType == 'tall') {
       height += additional;
@@ -271,7 +271,7 @@ function genDim(baseDim, added, roomType) {
       width,
       height
    };
-};
+}
 
 /**
  * 

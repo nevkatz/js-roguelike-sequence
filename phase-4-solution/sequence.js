@@ -52,7 +52,7 @@ function addAdjacentRoom(room) {
 
   let range = 3;
   for (var i = -1*range; i <= range; ++i) {
-   for (let center of possibleCenters(range)) {
+   for (let center of possibleCenters(i)) {
 
      let r = generateRoom(center, width, height);
 
@@ -95,27 +95,14 @@ function sequentialRooms() {
      for (var i = 0; i < maxRooms; ++i) {
         let newRoom = addAdjacentRoom(baseRoom);
         if (!newRoom) {
-          /**
-           * @TODO: Add relic to some spot in the room.
-           */ 
           break;
         }
         // new
         let min = 3;
-        baseRoom.directConnect(newRoom,min,true);
+        baseRoom.directConnect(newRoom);
         baseRoom = newRoom;
      }
    }
-   // maybe talk about these to get different results
-  // for (var room of game.rooms) {
-   //   let success = room.findFacingRooms(3);
-
-     // let success = room.nearestNeighbor();
-
-      //console.log(`Room${room.id} success: ${success}`);
-  // }
-
-   // after this, select other rooms to branch off of
 
    drawMap(0, 0, COLS, ROWS);
 

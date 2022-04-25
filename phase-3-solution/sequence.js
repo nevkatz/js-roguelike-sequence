@@ -53,7 +53,7 @@ function addAdjacentRoom(room) {
   let range = 3;
 
   for (var i = -1*range; i <= range; ++i) {
-   for (let center of possibleCenters(range)) {
+   for (let center of possibleCenters(i)) {
      let r = generateRoom(center, width, height);
 
      if (withinLimits(r) && !overlapsAny(r)) {
@@ -84,17 +84,14 @@ function sequentialRooms() {
    let baseRoom = addRoom(center);
 
    let maxRooms = 20;
-  /**
-   * @TODO: Add the while loop
-   */ 
+ 
      for (var i = 0; i < maxRooms; ++i) {
         let newRoom = addAdjacentRoom(baseRoom);
         if (!newRoom) {
           break;
         }
         // new
-        let min = 3;
-        baseRoom.directConnect(newRoom, min, true);
+        baseRoom.directConnect(newRoom);
         baseRoom = newRoom;
      }
 
@@ -102,6 +99,3 @@ function sequentialRooms() {
    return true;
 
 }
-/***
- * @TODO: Add a relic at the end of each passageway
- */
