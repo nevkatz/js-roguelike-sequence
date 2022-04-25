@@ -2,7 +2,7 @@
 function addAdjacentRoom(room, roomBefore) {
  // let axis = Math.random() <= 0.5 ? 'x' : 'y';
 
-  let { width, height } = genDim(6, 5, 'wide');
+
 
   const distBetween = (axis) => {
       let buff = 2;
@@ -51,7 +51,10 @@ function addAdjacentRoom(room, roomBefore) {
   } 
   let possibleRooms = [];
 
-   for (center of possibleCenters()) {
+  let { width, height } = genDim(6, 5, 'wide');
+
+  for (let center of possibleCenters()) {
+    
      let r = generateRoom(center, width, height);
 
      if (withinLimits(r) && !overlapsAny(r)) {
@@ -74,12 +77,12 @@ function addAdjacentRoom(room, roomBefore) {
 function sequentialRooms() {
    game.resetMap();
 
-   let r1 = {
+   const center = {
       x:Math.round(COLS/2),
       y:Math.round(ROWS/2)
    };
 
-   let baseRoom = addRoom(r1, 6, 5, 'wide');
+   let baseRoom = addRoom(center, 6, 5, 'wide');
 
    let maxRooms = 20;
 

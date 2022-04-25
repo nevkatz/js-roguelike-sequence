@@ -2,6 +2,12 @@
  *  Game Constants
  * 
  */ 
+
+// dimensions
+const COLS = 80;
+const ROWS = 60;
+const TILE_DIM = 10;
+
 const DEBUG = true;
 
 const OUTER_LIMIT = 3;
@@ -30,10 +36,7 @@ const POINTS_PER_LEVEL = 100;
 // the visible area
 const VISIBILITY = 3;
 
-// dimensions
-const COLS = 80;
-const ROWS = 60;
-const TILE_DIM = 10;
+
 
 
 
@@ -212,8 +215,6 @@ init();
 
 
 function startGame() {
-
-  // generateMapRooms();
 
   let ready = sequentialRooms();
 

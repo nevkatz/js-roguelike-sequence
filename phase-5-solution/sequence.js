@@ -1,8 +1,5 @@
 
-function addAdjacentRoom(room, roomBefore) {
- // let axis = Math.random() <= 0.5 ? 'x' : 'y';
-
-  let { width, height } = genDim();
+function addAdjacentRoom(room) {
 
   const distBetween = (axis) => {
       let buff = 2;
@@ -49,26 +46,30 @@ function addAdjacentRoom(room, roomBefore) {
     }
   ];
   } 
+
+  let { width, height } = genDim();
+
   let possibleRooms = [];
 
   let range = 3;
   for (var i = -1*range; i <= range; ++i) {
-   for (center of possibleCenters(range)) {
+   for (let center of possibleCenters(range)) {
      let r = generateRoom(center, width, height);
 
      if (withinLimits(r) && !overlapsAny(r)) {
        possibleRooms.push(r);
      }
-   }
-  }
+   } // end possibleCenters loop
+  } // end range loop
+
   let newRoom = null;
-  console.log('possible rooms: ' + possibleRooms.length);
+
   if (possibleRooms.length > 0) {
      let idx = Math.floor(Math.random()*possibleRooms.length);
      newRoom = possibleRooms[idx];
+
      game.curRoomId++;
-     console.log('placing room...');
-     console.log(newRoom);
+
      game.carveRoom(newRoom);
      game.rooms.push(newRoom);
   }
