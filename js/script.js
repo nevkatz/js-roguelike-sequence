@@ -741,6 +741,8 @@ function addKeyboardListener() {
          }
          else if (game.map[y][x] == RELIC_CODE) {
             player.relics++;
+            const maxValue = 10;
+            player.xp += Math.round(Math.random()*maxValue);
             removeObjFromMap(x,y);
          }
          // update player position

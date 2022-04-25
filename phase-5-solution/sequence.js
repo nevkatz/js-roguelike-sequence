@@ -102,19 +102,26 @@ function sequentialRooms() {
 
          if (!newRoom) {
 
+          console.log('relic count: ' + baseRoom.tileCount(RELIC_CODE));
+
             if (baseRoom.tileCount(RELIC_CODE)==0) {
               let coords = baseRoom.generateFreeCoords();
 
               if (coords) { placeItem(coords, RELIC_CODE); }
-              else {
-               console.log('relic could not be placed.');
-              }
             }
           break;
         }
         // new
         let min = 3;
         baseRoom.directConnect(newRoom);
+
+        // new
+        if (i == maxSeqLen -1 && !newRoom.tileCount(RELIC_CODE)) {
+             let coords = newRoom.generateFreeCoords();
+
+             if (coords) { placeItem(coords, RELIC_CODE); }
+
+        }
         baseRoom = newRoom;
      }
      tries++;

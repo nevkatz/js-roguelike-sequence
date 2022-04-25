@@ -604,5 +604,7 @@ Room.prototype.generateFreeCoords = function() {
    }
    while (!valid(x,y) && turns < limit);
 
+   console.log('x: ' + x + 'y: ' + y);
+
    return valid(x,y) ? {x,y} : null;
 }
