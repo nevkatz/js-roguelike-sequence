@@ -51,24 +51,27 @@ function addAdjacentRoom(room) {
   let { width, height } = genDim();
 
   const maxDiff = 3;
-  for (var i = -1*maxDiff; i <= maxDiff; ++i) {
-   for (let center of possibleCenters(i)) {
+
+  for (var diff = -1*maxDiff; diff <= maxDiff; ++diff) {
+
+   for (let center of possibleCenters(diff)) {
 
      let r = generateRoom(center, width, height);
 
      if (withinLimits(r) && !overlapsAny(r)) {
+
        possibleRooms.push(r);
+
      }
    }
   }
   let newRoom = null;
-  console.log('possible rooms: ' + possibleRooms.length);
+
   if (possibleRooms.length > 0) {
      let idx = Math.floor(Math.random()*possibleRooms.length);
      newRoom = possibleRooms[idx];
      game.curRoomId++;
-     console.log('placing room...');
-     console.log(newRoom);
+
      game.carveRoom(newRoom);
      game.rooms.push(newRoom);
   }
@@ -84,15 +87,17 @@ function sequentialRooms() {
 
    let baseRoom = addRoom(center);
 
-   let maxRooms = 20;
-   let minRooms = 20;
+   const maxSeqLen = 10;
+   const minTotalRooms = 20;
+   const maxTries = 100;
+   let tries = 0;
 
-   while (game.rooms.length < minRooms) {
+   while (game.rooms.length < minTotalRooms && tries < maxTries) {
      
      let idx = Math.floor(Math.random()*game.rooms.length);
      baseRoom = game.rooms[idx];
 
-     for (var i = 0; i < maxRooms; ++i) {
+     for (var i = 0; i < maxSeqLen; ++i) {
         let newRoom = addAdjacentRoom(baseRoom);
         if (!newRoom) {
           break;
@@ -102,6 +107,7 @@ function sequentialRooms() {
         baseRoom.directConnect(newRoom);
         baseRoom = newRoom;
      }
+     tries++;
    }
 
    drawMap(0, 0, COLS, ROWS);

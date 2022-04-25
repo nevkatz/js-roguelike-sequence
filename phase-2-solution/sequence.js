@@ -81,7 +81,7 @@ function sequentialRooms() {
 
    let baseRoom = addRoom(center, 6, 5, 'wide');
 
-   let maxRooms = 20;
+   const maxRooms = 20;
 
      for (var i = 0; i < maxRooms; ++i) {
         let newRoom = addAdjacentRoom(baseRoom);

@@ -52,8 +52,8 @@ function addAdjacentRoom(room) {
 
   const maxDiff = 3;
 
-  for (var i = -1*maxDiff; i <= maxDiff; ++i) {
-   for (let center of possibleCenters(i)) {
+  for (var diff = -1*maxDiff; diff <= maxDiff; ++diff) {
+   for (let center of possibleCenters(diff)) {
      let r = generateRoom(center, width, height);
 
      if (withinLimits(r) && !overlapsAny(r)) {
@@ -83,7 +83,7 @@ function sequentialRooms() {
 
    let baseRoom = addRoom(center);
 
-   let maxRooms = 20;
+   const maxRooms = 20;
  
      for (var i = 0; i < maxRooms; ++i) {
         let newRoom = addAdjacentRoom(baseRoom);

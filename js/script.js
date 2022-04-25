@@ -318,7 +318,10 @@ function generateRoom(center, width, height) {
 
 }
 
-function addRoom(c, baseDim, additional, roomType) {
+function addRoom(coords, baseDim, additional, roomType) {
+
+   let { width, height} = genDim(baseDim, additional, roomType);
+
    const genCenterCoord = (maxCells, dim) => {
       // get limit on either side based on outer limit and a room dimension - width or height
       let limit = OUTER_LIMIT + Math.round(dim / 2);
@@ -329,9 +332,8 @@ function addRoom(c, baseDim, additional, roomType) {
       // get a random  number within 
       return limit + Math.round(Math.random() * range);
    }
-   let { width, height} = genDim(baseDim, additional, roomType);
 
-   let coords = c || {
+   coords = coords || {
       x: genCenterCoord(COLS, width),
       y: genCenterCoord(ROWS, height)
    }
