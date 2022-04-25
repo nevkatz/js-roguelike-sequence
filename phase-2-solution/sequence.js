@@ -1,8 +1,5 @@
 
 function addAdjacentRoom(room, roomBefore) {
- // let axis = Math.random() <= 0.5 ? 'x' : 'y';
-
-
 
   const distBetween = (axis) => {
       let buff = 2;

@@ -7,7 +7,7 @@ function addAdjacentRoom(room) {
       let roomSize = room.end[axis] - room.start[axis];
       return Math.ceil((newSize+roomSize)/2) + buff; 
   } 
-  const withinLimits =(room)=> {
+  const withinLimits = (room)=> {
    return room.start.x >= OUTER_LIMIT &&
           room.start.y >= OUTER_LIMIT &&
           room.end.x <= COLS - OUTER_LIMIT &&

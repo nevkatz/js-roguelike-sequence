@@ -6,28 +6,30 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<h1>Roguelike Phases</h1>
-<div id="container"></div>
+<h1>Roguelike with Sequential Rooms</h1>
+<div id="container">
+  <p><a href="project/index.html">Project</a></p>
+</div>
 </body>
 <script>
   let el = document.querySelector('#container');
   let d = document.createDocumentFragment();
-  let numPhases = 5;
 
-  const addItem =(num,label,dir)=> {
+
+  const addItem = (num)=> {
     let p = document.createElement('p');
     let a = document.createElement('a');
 
-    let myDir = dir || `phase-${num}`;
-    a.href = `${myDir}/index.html`;
-    a.innerHTML = label || `Phase ${num}`;
+    let dir = `phase-${num}-solution`;
+    a.href = `${dir}/index.html`;
+    a.innerHTML = `Phase ${num} Solution`;
     p.appendChild(a);
     d.appendChild(p);
   };
+  let numPhases = 5;
   for (var i = 1; i <= numPhases; ++i) {
       addItem(i);
   }
-  addItem(null,'Phase 5 Solution','phase-5-solution')
   el.appendChild(d);
 </script>
 </html>
