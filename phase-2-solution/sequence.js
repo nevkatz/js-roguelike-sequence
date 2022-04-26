@@ -1,11 +1,13 @@
 
-function addAdjacentRoom(room, roomBefore) {
+function addAdjacentRoom(room) {
+
+  let { width, height } = genDim(6, 5, 'wide');
 
   const distBetween = (axis) => {
-      let buff = 2;
+      let passageLength = 3;
       let newSize = (axis == 'y') ? height : width;
-      let roomSize = room.end[axis] - room.start[axis];
-      return Math.ceil((newSize+roomSize)/2) + buff; 
+      let roomSize = room.end[axis] - room.start[axis] + 1;
+      return Math.ceil(newSize/2)+Math.ceil(roomSize/2) + passageLength; 
   } 
   const withinLimits =(room)=> {
    return room.start.x >= OUTER_LIMIT &&
@@ -48,7 +50,6 @@ function addAdjacentRoom(room, roomBefore) {
   } 
   let possibleRooms = [];
 
-  let { width, height } = genDim(6, 5, 'wide');
 
   for (let center of possibleCenters()) {
     
