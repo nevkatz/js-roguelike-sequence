@@ -62,9 +62,9 @@ Room.prototype.alignedHoriz = function(room) {
 
 /**
  * @param {Number} min - the minimum number of x or y coordinates facing rooms should share.
- * @param {Number} maxRooms - the maximum # of ooms a room should connect with.
+ * @param {Number} maxSeqLen - the maximum # of ooms a room should connect with.
  */ 
-Room.prototype.findFacingRooms = function(min=1, maxRooms=1) {
+Room.prototype.findFacingRooms = function(min=1, maxSeqLen=1) {
 
    let success = false;
    
@@ -80,7 +80,7 @@ Room.prototype.findFacingRooms = function(min=1, maxRooms=1) {
           success = this.connectRoom(room, min);
 
       }
-      if (this.neighbors.length >= maxRooms) {
+      if (this.neighbors.length >= maxSeqLen) {
          break;
       }
    }

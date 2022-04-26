@@ -368,9 +368,9 @@ function generateMapRooms() {
 
    game.resetMap();
 
-   let maxRooms = 30;
+   let maxSeqLen = 30;
 
-   for (var i = 0; i < maxRooms; ++i) {
+   for (var i = 0; i < maxSeqLen; ++i) {
       addRoom();
    }
    let success = false;
