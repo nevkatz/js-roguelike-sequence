@@ -4,7 +4,7 @@ function addAdjacentRoom(room) {
   let { width, height } = genDim(6, 5, 'wide');
 
   const distBetween = (axis) => {
-      let passageLength = 3;
+      let passageLength = 1;
       let newSize = (axis == 'y') ? height : width;
       let roomSize = room.end[axis] - room.start[axis] + 1;
       return Math.ceil(newSize/2)+Math.ceil(roomSize/2) + passageLength; 
