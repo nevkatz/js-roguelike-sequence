@@ -1,7 +1,7 @@
 
 function addAdjacentRoom(room) {
 
-  let { width, height } = genDim(6, 5, 'wide');
+  let width = 11, height = 6;
 
   const distBetween = (axis) => {
       let passageLength = 1;
@@ -80,7 +80,13 @@ function sequentialRooms() {
       y:Math.round(ROWS/2)
    };
 
-   let baseRoom = addRoom(center, 6, 5, 'wide');
+   let width = 11, height = 6;
+
+   let baseRoom = generateRoom(center, width, height);
+
+   game.curRoomId++;
+   game.carveRoom(baseRoom);
+   game.rooms.push(baseRoom);
 
    const maxSeqLen = 20;
 

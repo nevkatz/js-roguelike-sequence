@@ -80,19 +80,26 @@ function addAdjacentRoom(room) {
 function sequentialRooms() {
    game.resetMap();
 
-   let r1 = {
+    // central room
+   const center = {
       x:Math.round(COLS/2),
       y:Math.round(ROWS/2)
    };
-   console.log(r1);
 
-   let baseRoom = addRoom(r1);
+   let { width, height} = genDim();
 
+   let baseRoom = generateRoom(center, width, height);
+   
+   game.curRoomId++;
+   game.carveRoom(baseRoom);
+   game.rooms.push(baseRoom);
+
+   // room sequence
    const maxSeqLen = 10;
    const minTotalRooms = 20;
    const maxTries = 100;
    let tries = 0;
-
+   
    while (game.rooms.length < minTotalRooms && tries < maxTries) {
      
      let idx = Math.floor(Math.random()*game.rooms.length);

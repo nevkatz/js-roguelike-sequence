@@ -349,10 +349,7 @@ function addRoom(coords, baseDim, additional, roomType) {
    }
 
    game.curRoomId++;
-
-
    game.carveRoom(room);
-
    game.rooms.push(room);
    return room;
 

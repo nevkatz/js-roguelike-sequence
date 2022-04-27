@@ -83,7 +83,13 @@ function sequentialRooms() {
       y:Math.round(ROWS/2)
    };
 
-   let baseRoom = addRoom(center);
+   let { width, height} = genDim();
+
+   let baseRoom = generateRoom(center, width, height);
+   
+   game.curRoomId++;
+   game.carveRoom(baseRoom);
+   game.rooms.push(baseRoom);
 
    const maxSeqLen = 20;
  
