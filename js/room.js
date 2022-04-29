@@ -194,7 +194,7 @@ Room.prototype.connectRoom = function(room, min=3, center) {
    }
    
    if (!success) {
-      console.log('trying corner...');
+
       // if we add doorTiles logic we need to mix in the inRoom
       // so it can'b be adjacent and it can't be in a room.
       let vertCorner = {x:this.center.x,y:room.center.y};
@@ -216,7 +216,7 @@ Room.prototype.connectRoom = function(room, min=3, center) {
 }
 
 Room.prototype.cornerVert = function(room, corner) {
-   console.log('corner vert...')
+
 
    let vert = new Path(), horiz = new Path();
 
@@ -607,7 +607,6 @@ Room.prototype.generateFreeCoords = function() {
    }
    while (!valid(x,y) && turns < limit);
 
-   console.log('x: ' + x + 'y: ' + y);
 
    return valid(x,y) ? {x,y} : null;
 }
@@ -617,19 +616,15 @@ Room.prototype.selectFreeCoords = function() {
 
    const valid = (x,y) => game.map[y][x] == FLOOR_CODE;
 
-   console.log(`start - x: ${this.start.x},y: ${this.start.y}`);
-   console.log(`end - x: ${this.end.x},y: ${this.end.y}`);
    for (let y = this.start.y; y < this.end.y; ++y) {
-      
+
      for (let x = this.start.x; x < this.end.x; ++x) {
 
-        console.log('testing x: ' + x + ' and y: ' + y);
         if (valid(x,y)) {
            validCoordSets.push({x,y})
         }
      }
    }
-   console.log(validCoordSets);
    let idx = Math.floor(Math.random()*validCoordSets.length);
 
    return validCoordSets.length > 0 ? validCoordSets[idx] : null;

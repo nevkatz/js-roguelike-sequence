@@ -86,7 +86,7 @@ function sequentialRooms() {
       y:Math.round(ROWS/2)
    };
 
-   let { width, height} = genDim();
+   let { width, height } = genDim();
 
    let baseRoom = generateRoom(center, width, height);
    
@@ -99,23 +99,48 @@ function sequentialRooms() {
    const minTotalRooms = 20;
    const maxTries = 100;
    let tries = 0;
-   
-   while (game.rooms.length < minTotalRooms && tries < maxTries) {
-     
-     let idx = Math.floor(Math.random()*game.rooms.length);
-     baseRoom = game.rooms[idx];
 
+   // start a room sequence
+   let roomSequence = [baseRoom];
+
+   // create the array of sequences.
+   let sequences = [roomSequence];
+
+   // iterate through the length of the sequence
+   while (game.rooms.length < minTotalRooms && tries < maxTries) {
+
+    // let's select a sequence from a list of available sequences.
+    let seqIdx= Math.floor(Math.random()*sequences.length);
+
+    roomSequence = sequences[seqIdx];
+     
+    let roomIdx = Math.floor(Math.random()*(roomSequence.length-1));
+
+    console.log('roomIdx: ' + roomIdx + ' len: ' + roomSequence.length);
+    
+    baseRoom = roomSequence[roomIdx];
+
+    console.log('baseRoomID: ' + baseRoom.id + ' last id: ' + roomSequence[roomSequence.length-1].id);
+    
+    console.log('clear room sequence');
+    //  more sophisticated algorithm that is conscious of room sequences.
+    roomSequence = [];
      for (var i = 0; i < maxSeqLen; ++i) {
 
         let newRoom = addAdjacentRoom(baseRoom);
 
          if (!newRoom) {
-
-            if (baseRoom.tileCount(RELIC_CODE)==0) {
+            // we can't keep getting the root room of the sequence.
+            if (roomSequence.length > 1 && baseRoom.tileCount(RELIC_CODE)==0) {
               let coords = baseRoom.selectFreeCoords();
 
-              if (coords) { placeItem(coords, RELIC_CODE); }
+              if (coords) { 
+                 console.log('in breakout; adding relic to ' + baseRoom.id + '; room seq len is ' + roomSequence.length);
+                placeItem(coords, RELIC_CODE); 
+              }
             }
+            // ending the loop here....
+
           break;
         }
         // new
@@ -126,10 +151,23 @@ function sequentialRooms() {
         if (i == maxSeqLen -1 && !newRoom.tileCount(RELIC_CODE)) {
              let coords = newRoom.generateFreeCoords();
 
-             if (coords) { placeItem(coords, RELIC_CODE); }
+             if (coords) { 
+                 console.log('end of seq; adding relic to ' + baseRoom.id);
+              placeItem(coords, RELIC_CODE); 
+            }
 
         }
+        console.log(`baseRoom ${baseRoom.id} adds room ${newRoom.id}`);
+        roomSequence.push(newRoom);
+       
         baseRoom = newRoom;
+     } // end for loop
+
+     if (roomSequence.length > 0) { 
+      console.log('push in finished sequence of ' + roomSequence.length);
+      sequences.push(roomSequence); 
+
+
      }
      tries++;
    }
