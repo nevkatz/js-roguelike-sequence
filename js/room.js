@@ -586,6 +586,9 @@ Room.prototype.tileCount = function(tileCode) {
    }
    return count;
 }
+/**
+ * Naive implementation
+ */ 
 Room.prototype.generateFreeCoords = function() {
 
    let x = null, y=null;
@@ -607,4 +610,28 @@ Room.prototype.generateFreeCoords = function() {
    console.log('x: ' + x + 'y: ' + y);
 
    return valid(x,y) ? {x,y} : null;
+}
+Room.prototype.selectFreeCoords = function() {
+
+   let validCoordSets = [];
+
+   const valid = (x,y) => game.map[y][x] == FLOOR_CODE;
+
+   console.log(`start - x: ${this.start.x},y: ${this.start.y}`);
+   console.log(`end - x: ${this.end.x},y: ${this.end.y}`);
+   for (let y = this.start.y; y < this.end.y; ++y) {
+      
+     for (let x = this.start.x; x < this.end.x; ++x) {
+
+        console.log('testing x: ' + x + ' and y: ' + y);
+        if (valid(x,y)) {
+           validCoordSets.push({x,y})
+        }
+     }
+   }
+   console.log(validCoordSets);
+   let idx = Math.floor(Math.random()*validCoordSets.length);
+
+   return validCoordSets.length > 0 ? validCoordSets[idx] : null;
+
 }

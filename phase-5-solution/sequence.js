@@ -111,10 +111,8 @@ function sequentialRooms() {
 
          if (!newRoom) {
 
-          console.log('relic count: ' + baseRoom.tileCount(RELIC_CODE));
-
             if (baseRoom.tileCount(RELIC_CODE)==0) {
-              let coords = baseRoom.generateFreeCoords();
+              let coords = baseRoom.selectFreeCoords();
 
               if (coords) { placeItem(coords, RELIC_CODE); }
             }
