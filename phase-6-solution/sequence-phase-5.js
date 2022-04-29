@@ -100,12 +100,18 @@ function sequentialRooms() {
    const maxTries = 100;
    let tries = 0;
 
+   // start a room sequence
+   let roomSequence = [baseRoom];
+
+   // iterate through the length of the sequence
    while (game.rooms.length < minTotalRooms && tries < maxTries) {
      
-     let idx = Math.floor(Math.random()*game.rooms.length);
-     baseRoom = game.rooms[idx];
-     
-     console.log('idx: '+idx+'baseRoom: ' + baseRoom);
+     if (roomSequence.length > 0) {
+         console.log('selecting a room from last sequence...');
+         let idx = Math.floor(Math.random()*(roomSequence.length-1));
+         baseRoom = roomSequence[idx];
+         roomSequence = [];
+     }
   
      for (var i = 0; i < maxSeqLen; ++i) {
 
@@ -113,6 +119,7 @@ function sequentialRooms() {
 
          if (!newRoom) {
 
+            console.log('breaking out...');
             if (baseRoom.tileCount(RELIC_CODE)==0) {
               let coords = baseRoom.selectFreeCoords();
 
@@ -131,6 +138,7 @@ function sequentialRooms() {
              if (coords) { placeItem(coords, RELIC_CODE); }
 
         }
+        roomSequence.push(newRoom);
        
         baseRoom = newRoom;
      }
