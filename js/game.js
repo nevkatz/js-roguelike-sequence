@@ -71,6 +71,12 @@ Game.prototype.carveRoom = function(room) {
       }
    }
 }
-
+Game.prototype.tileCount = function(tileCode) {
+   let count = 0;
+   for (var room of game.rooms) {
+    count += room.tileCount(tileCode);
+   }
+   return count;
+}
 
 

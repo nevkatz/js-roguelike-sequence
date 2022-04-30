@@ -36,13 +36,7 @@ const POINTS_PER_LEVEL = 100;
 // the visible area
 const VISIBILITY = 3;
 
-
-
-
-
-// total enemies
 const TOTAL_ENEMIES = 15;
-const MAX_RELICS = 5;
 const STARTING_POTIONS_AMOUNT = 10;
 const STARTING_WEAPONS_AMOUNT = 10;
 
@@ -59,9 +53,8 @@ const TILE_COLORS = [
    'green',
    // weapon
    'orange',
+
    // relic
-   // '#86549c'
-   //'#b27bb6'
    '#a117f2'
 ];
 
@@ -227,6 +220,7 @@ function startGame() {
      updateStats();
      drawMap(0, 0, COLS, ROWS);
      //labelRooms();
+     console.log('enemies: '+ game.enemies.length);
   }
 }
 function labelRooms() {
@@ -741,6 +735,7 @@ function addKeyboardListener() {
             const maxValue = 10;
             player.xp += Math.round(Math.random()*maxValue);
             removeObjFromMap(x,y);
+            checkForWin();
          }
          // update player position
          updatePlayerPosition(player.coords.x, player.coords.y, x, y);
@@ -801,17 +796,31 @@ function enemyDefeated(enemy) {
    let e_idx = game.enemies.indexOf(enemy);
 
    // remove enemy from array
-   game.enemies.slice(e_idx, 1);
-
+   game.enemies.splice(e_idx, 1);
 
    // update stats
    updateStats();
 
+   checkForWin();
+
    // if no enemies, user wins
+  
+}
+function checkForWin() {
    if (game.enemies.length == 0) {
       userWins();
    }
 }
+/*
+function checkForWin() {
+
+   if (game.enemies.length == 0 && 
+      game.tileCount(RELIC_CODE)==0) {
+      userWins();
+   }
+}*/
+
+
 
 
 

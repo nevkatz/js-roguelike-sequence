@@ -97,8 +97,8 @@ function addCenterRoom() {
 function buildSequence(baseRoom) {
 
    // let's write a convenient function for placing relics.
-   const placeRelic = () => {
-        let coords = baseRoom.selectFreeCoords();
+   const placeRelic = (room) => {
+        let coords = room.selectFreeCoords();
         if (coords) { 
            placeItem(coords, RELIC_CODE); 
         }
@@ -116,6 +116,7 @@ function buildSequence(baseRoom) {
          if (!newRoom) {
             // we can't keep getting the root room of the sequence.
             if (roomSequence.length > 1 && baseRoom.tileCount(RELIC_CODE)==0) {
+              console.log('[breakout] placing relic in room ' + baseRoom.id);
               placeRelic(baseRoom);
             }
             // ending the loop here....
@@ -126,6 +127,7 @@ function buildSequence(baseRoom) {
         baseRoom.directConnect(newRoom);
         // new
         if (i == maxSeqLen -1 && !newRoom.tileCount(RELIC_CODE)) {
+            console.log('[end] placing relic in room ' + newRoom.id);
             placeRelic(newRoom);
         }
         roomSequence.push(newRoom);
@@ -139,7 +141,6 @@ function sequentialRooms() {
    game.resetMap();
 
    let baseRoom = addCenterRoom();
-
    // start a room sequence
    let roomSequence = [baseRoom];
 
@@ -147,7 +148,6 @@ function sequentialRooms() {
    // this is effectively a 2D array of rooms.
    // include diagram
    let sequences = [roomSequence];
-
 
    const minTotalRooms = 24;
    const maxTries = 100;
