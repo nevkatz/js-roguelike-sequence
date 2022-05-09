@@ -110,19 +110,19 @@ class Enemy {
  * Constants
  */
 const WEAPONS = [{
-      name: "Dagger",
+      name: "Stern Glance",
       damage: 15
    },
    {
-      name: "Sword",
+      name: "Tech Jargon",
       damage: 30
    },
    {
-      name: "Hammer",
+      name: "TPS Report",
       damage: 60
    },
    {
-      name: "Axe",
+      name: "Dad Joke",
       damage: 100
    }
 ];
