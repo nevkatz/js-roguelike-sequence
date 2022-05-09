@@ -72,15 +72,13 @@ const TILE_COLORS = [
  * @property {string} weapon - ties to an object with a damage rating
  * @property {object} coords - location on the grid
  * @property {number} xp - experience points
- * @property {relics} relics - relics collected
  */
 class Player {
-   constructor(level, health, weapon, coords, xp, relics) {
+   constructor(level, health, weapon, coords, xp) {
       this.level = level;
       this.health = health;
       this.weapon = weapon;
       this.coords = coords;
-      this.relics = relics;
       this.xp = xp;
    }
 }
@@ -151,7 +149,7 @@ function createDOM() {
 
    hud.id = 'hud';
 
-   let labels = ['XP', 'Level', 'Health', 'Weapon', 'Damage', 'Enemies','Relics'];
+   let labels = ['XP', 'Level', 'Health', 'Weapon', 'Damage', 'Enemies'];
 
    for (var label of labels) {
       hud = addStat(label, hud);
@@ -497,7 +495,7 @@ function placeItem(coords,tileCode) {
  */
 function updateStats() {
 
-   let player_props = ['xp', 'level', 'health','relics'];
+   let player_props = ['xp', 'level', 'health'];
 
    for (var prop of player_props) {
       let el = document.getElementById(prop);
@@ -591,29 +589,7 @@ function generateValidCoords() {
    return {x,y};
 
 }
-/**
- * New for relics
- */ 
-function generateValidRoomCoords(room) {
 
-   let x=null, y=null;
-
-   let turns = 0, limit = 100;
-
-   const valid = (x,y) => game.map[y][x] == FLOOR_CODE;
-
-   let width = room.end.x - room.start.x;
-   let height = room.end.y - room.start.y;
-
-   do {
-      x = room.start.x + Math.floor(Math.random() * width);
-      y = room.start.y + Math.floor(Math.random() * height);
-      turns++;
-   }
-   while (!valid(x,y) && turns < limit);
-
-   return valid(x,y) ? {x,y} : null;
-}
 function pickRandom(arr) {
    let idx = Math.floor(Math.random() * arr.length);
 
@@ -730,13 +706,7 @@ function addKeyboardListener() {
             removeObjFromMap(x, y);
             generateItems(1, WEAPON_CODE);
          }
-         else if (game.map[y][x] == RELIC_CODE) {
-            player.relics++;
-            const maxValue = 10;
-            player.xp += Math.round(Math.random()*maxValue);
-            removeObjFromMap(x,y);
-            checkForWin();
-         }
+
          // update player position
          updatePlayerPosition(player.coords.x, player.coords.y, x, y);
 
