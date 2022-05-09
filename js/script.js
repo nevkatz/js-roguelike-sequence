@@ -660,6 +660,7 @@ function drawObject(x, y, color) {
  */
 function addKeyboardListener() {
    document.addEventListener('keydown', function(e) {
+      if (player) {
       var x = player.coords.x;
       var y = player.coords.y;
       var oldX = player.coords.x;
@@ -721,6 +722,7 @@ function addKeyboardListener() {
          drawMap(left, top, right, bot);
       }
       e.preventDefault(); // prevent the default action (scroll / move caret)
+     }
    });
 }
 
